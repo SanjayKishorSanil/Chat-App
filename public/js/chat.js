@@ -1,11 +1,8 @@
 
-//var SocketIOFileUpload = require('socketio-file-upload');
 const socket=io()
 
 
-//var socket = io.connect();
-// var uploader = new SocketIOFileUpload(socket);
-// uploader.listenOnInput(document.getElementById("siofu_input"));
+
 
 //Elements
 const $messageForm=document.querySelector('#message-form')
@@ -59,6 +56,8 @@ socket.on('message',(message)=>{
         autoscroll()
 })
 
+
+
 socket.on('locationMessage',(message)=>{
     console.log(message)
     const html=Mustache.render(locationMessageTemplate,{
@@ -70,12 +69,23 @@ socket.on('locationMessage',(message)=>{
     autoscroll()
 })
 
-socket.on('roomData',({room,users})=>{
+socket.on('roomData',({room,users,history})=>{
     const html=Mustache.render(sidebarTemplate,{
         room,
         users
     })
     document.querySelector('#sidebar').innerHTML=html
+
+    for( message of history){
+        const html=Mustache.render(messageTemplate,{
+            username:message.username,
+            message:message.text,
+            createdAt:moment(message.createdAt).format('h:mm A')
+        })
+        $messages.insertAdjacentHTML('beforeend',html)
+        autoscroll()
+    }
+
 })
 
 $messageForm.addEventListener('submit',(e)=>{

@@ -12,7 +12,8 @@ const publicDirectoryPath=path.join(__dirname,'../public')
 
 app.use(express.static(publicDirectoryPath))
 
-
+const history = []
+const client = []
 
 
 
@@ -22,6 +23,7 @@ io.on('connection',(socket)=>{
     
     socket.on('join',({username,room},callback)=>{
     const {error,user}=addUser({id:socket.id,username,room})
+
 
     if(error){
          return callback(error)
@@ -33,7 +35,8 @@ io.on('connection',(socket)=>{
     socket.broadcast.to(user.room).emit('message',generateMessage('Admin',user.username+" has joined"))
     io.to(user.room).emit('roomData',{
         room:user.room,
-        users:getUsersInRoom(user.room)
+        users:getUsersInRoom(user.room),
+        history:history
     })
     callback()
 })
@@ -45,6 +48,10 @@ io.on('connection',(socket)=>{
         if(filter.isProfane(message)){
             return callback('Profanity is not allowed')
         }
+       // history.push(message)
+        const messageHistory= generateMessage(user.username,message)
+        history.push(messageHistory)
+        console.log('histroy',history)
         io.to(user.room).emit('message',generateMessage(user.username,message))
         callback()
     })
