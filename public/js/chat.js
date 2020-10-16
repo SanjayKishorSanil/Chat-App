@@ -1,8 +1,11 @@
 
-
+//var SocketIOFileUpload = require('socketio-file-upload');
 const socket=io()
 
 
+//var socket = io.connect();
+// var uploader = new SocketIOFileUpload(socket);
+// uploader.listenOnInput(document.getElementById("siofu_input"));
 
 //Elements
 const $messageForm=document.querySelector('#message-form')
@@ -17,7 +20,6 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
-const sendFileTemplate = document.querySelector('#send-file-template').innerHTML
 
 //options
 
@@ -40,7 +42,7 @@ const autoscroll=()=>{
 
     if(containerHeight-newMessageHeight <= scrollOffset){
         $messages.scrollTop = $messages.scrollHeight
-
+         
     }
 
 
@@ -94,9 +96,7 @@ $messageForm.addEventListener('submit',(e)=>{
     })
 })
 
-$sendFileForm.addEventListener('submit',(e)=>{
-    console.log(e)
-})
+
 document.querySelector('#send-location').addEventListener('click',()=>{
     if(!navigator.geolocation){
         return alert('GEOLOCATION not supported by your location')

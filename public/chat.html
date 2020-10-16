@@ -17,10 +17,7 @@
                         <input type="text" placeholder="MESSAGE" name="message" required autocomplete="off">
                         <button >Submit</button>
                         </form>
-                        <form id="send-file-form">
-                            <input type="file" placeholder="Insert file here">
-                            <button>Submit</button>
-                        </form>
+                        
                         <button id="send-location">SEND LOCATION</button>
                        
                 </div>
@@ -29,15 +26,6 @@
         </div>
 
        
-        <script id="send-file-template" type="text/html">
-            <div class="message">
-                <p>
-                    <span class="message__name">{{username}}</span>
-                    <span class="message__meta">{{createdAt}}</span>
-                </p>
-                <p>{{fileName}}</p>    
-            </div>
-        </script>
 
         <script id="message-template" type="text/html">
             <div class="message">
@@ -48,7 +36,7 @@
                 <p>{{message}}</p>    
             </div>
         </script>
-
+                                                          
         <script id="location-message-template" type="text/html">
             <div class="message">
                 <p>
